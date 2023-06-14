@@ -2,9 +2,11 @@ import gym
 import numpy as np
 import tensorflow as tf
 from collections import deque
-from tensorflow.keras.layers import Conv2D, Dense, Flatten
-from tensorflow.keras.optimizers import Adam
+from tensorflow import keras
+from keras.layers import Conv2D, Dense, Flatten
+from keras.optimizers import Adam
 import cv2
+
 # Create the Atari Breakout environment
 env = gym.make('Breakout-v0', render_mode='human')
 n_outputs = env.action_space.n
@@ -41,7 +43,7 @@ epsilon_initial = 1.0
 epsilon_final = 0.1
 epsilon_decay_steps = 500000
 steps_train = 4
-start_steps = 10000
+start_steps = 1000
 copy_steps = 10000
 
 # Define the epsilon-greedy policy
@@ -109,7 +111,6 @@ for episode in range(num_episodes):
     loss = 0
 
     while True:
-        #env.render()
 
         # Preprocess the observation
         obs_processed = preprocess_observation(obs)
@@ -158,7 +159,7 @@ for episode in range(num_episodes):
             break
     result[episode+1]=reward
 
-    #print('Episode:', episode, 'Reward:', episode_reward, 'Loss:', loss)
+    print('Episode:', episode, 'Reward:', episode_reward, 'Loss:', loss)
 
 env.close()
 print(result)
